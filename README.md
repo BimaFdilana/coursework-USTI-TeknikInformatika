@@ -20,15 +20,20 @@ npm install
 
 ### 3. Konfigurasi .Env
 
+ Buat DB dengan nama ** mahasiswa ** menggunakan MySQL atau yang lain 
+
 ```bash
 cp .env.example .env
 ```
 lalu sesuaikan .env dengan database yang akan digunakan
 ```bash
-APP_NAME=LabApp
+APP_NAME=Mahasiswa
 APP_URL=http://localhost:8000
 
-DB_DATABASE=nama_database
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=mahasiswa
 DB_USERNAME=root
 DB_PASSWORD=
 
@@ -62,18 +67,6 @@ php artisan serve
 
 Buka browser dan akses aplikasi di `http://localhost:8000`.
 
-
-# 👥 Akun Default (Untuk Pengujian)
-
-## Mahasiswa
-NIM: 1234567890
-Email: budi@pinlab.com
-Password: password12345
-
-## Kepala Labor
-NIM: 0000000001
-Email: admin@pinlab.com
-Password: password12345
 
 
 
