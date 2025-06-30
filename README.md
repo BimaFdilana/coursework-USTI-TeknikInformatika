@@ -54,7 +54,6 @@ php artisan key:generate
 ```bash
 php artisan key:generate
 php artisan migrate
-php artisan db:seed
 ```
 
 ### 6. Run Development Server
