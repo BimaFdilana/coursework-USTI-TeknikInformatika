@@ -16,8 +16,12 @@ return new class extends Migration
         Schema::create('pengujians', function (Blueprint $table) {
             $table->id();
             $table->string('nama');
-            $table->string('prodi_kelas');
-            $table->string('nama_penguji');
+            $table->string('nisn')->unique();
+            $table->string('tempat_lahir');
+            $table->date('tanggal_lahir');
+            $table->text('alamat');
+            $table->string('asal_sekolah');
+            $table->string('jurusan');
             $table->timestamps();
         });
     }

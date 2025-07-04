@@ -9,77 +9,69 @@ use Illuminate\Http\Request;
 
 class PengujianController extends Controller
 {
-    /**
-     * Menampilkan daftar semua data.
-     */
+    // Menampilkan semua data siswa
     public function index()
     {
-        $dataPengujian = Pengujian::latest()->paginate(10);
-        return view('pages.index', compact('dataPengujian'));
+        $siswas = Pengujian::latest()->paginate(5); // Mengambil data terbaru dan paginasi
+        return view('pages.index', compact('siswas'));
     }
 
-    /**
-     * Menampilkan form untuk membuat data baru.
-     */
+    // Menampilkan form untuk membuat data baru
     public function create()
     {
         return view('pages.create');
     }
 
-    /**
-     * Menyimpan data baru ke database.
-     */
+    // Menyimpan data baru ke database
     public function store(Request $request)
     {
         // Validasi input
         $request->validate([
-            'nim'          => 'required|string|max:20|unique:pengujians,nim',
-            'nama'         => 'required|string|max:255',
-            'prodi_kelas'  => 'required|string|max:255',
-            'nama_penguji' => 'required|string|max:255',
+            'nama' => 'required|min:3',
+            'nisn' => 'required|unique:pengujians,nisn',
+            'tempat_lahir' => 'required',
+            'tanggal_lahir' => 'required|date',
+            'alamat' => 'required',
+            'asal_sekolah' => 'required',
+            'jurusan' => 'required',
         ]);
 
+        // Membuat data baru
         Pengujian::create($request->all());
 
-        return redirect()->route('pengujian.index')
-            ->with('success', 'Data berhasil ditambahkan.');
+        return redirect()->route('siswa.index')->with('success', 'Data siswa berhasil ditambahkan.');
     }
 
-    /**
-     * Menampilkan form untuk mengedit data.
-     */
-    public function edit(Pengujian $pengujian)
+    // Menampilkan form untuk mengedit data
+    public function edit(Pengujian $siswa)
     {
-        return view('pages.edit', compact('pengujian'));
+        return view('pages.edit', compact('siswa'));
     }
 
-    /**
-     * Memperbarui data di database.
-     */
-    public function update(Request $request, Pengujian $pengujian)
+    // Memperbarui data di database
+    public function update(Request $request, Pengujian $siswa)
     {
         // Validasi input
         $request->validate([
-            'nim'          => 'required|string|max:20|unique:pengujians,nim,' . $pengujian->id,
-            'nama'         => 'required|string|max:255',
-            'prodi_kelas'  => 'required|string|max:255',
-            'nama_penguji' => 'required|string|max:255',
+            'nama' => 'required|min:3',
+            'nisn' => 'required|unique:siswas,nisn,' . $siswa->id, // NISN boleh sama dengan data yg sedang diedit
+            'tempat_lahir' => 'required',
+            'tanggal_lahir' => 'required|date',
+            'alamat' => 'required',
+            'asal_sekolah' => 'required',
+            'jurusan' => 'required',
         ]);
 
-        $pengujian->update($request->all());
+        // Update data
+        $siswa->update($request->all());
 
-        return redirect()->route('pengujian.index')
-            ->with('success', 'Data berhasil diperbarui.');
+        return redirect()->route('siswa.index')->with('success', 'Data siswa berhasil diperbarui.');
     }
 
-    /**
-     * Menghapus data dari database.
-     */
-    public function destroy(Pengujian $pengujian)
+    // Menghapus data dari database
+    public function destroy(Pengujian $siswa)
     {
-        $pengujian->delete();
-
-        return redirect()->route('pengujian.index')
-            ->with('success', 'Data berhasil dihapus.');
+        $siswa->delete();
+        return redirect()->route('siswa.index')->with('success', 'Data siswa berhasil dihapus.');
     }
 }

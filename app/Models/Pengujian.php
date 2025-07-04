@@ -16,10 +16,5 @@ class Pengujian extends Model
      *
      * @var array<int, string>
      */
-    protected $fillable = [
-        'nim',
-        'nama',
-        'prodi_kelas',
-        'nama_penguji',
-    ];
+    protected $guarded = ['id'];
 }
